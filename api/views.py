@@ -1,61 +1,73 @@
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from .handler import Handler
-from .models import Category
+from .models import Category, SubCategory, Item
 import json
+from .handler import getOne, getMultiple, createOne, updateOne, deleteOne
 
 
 @csrf_exempt
 def categoryController(request: HttpRequest, id=False):
-    handler = Handler[Category]()
     if request.method == 'GET':
         # if id is not false then return single document
         if id != False:
-            document = Category.objects(id=id)
-            jsonDocument = json.loads(document.to_json())
-            return JsonResponse({'data': jsonDocument, 'id': id})
-
-        documents = Category.objects
-        jsonDocuments = json.loads(documents.to_json())
-        return JsonResponse({'data': jsonDocuments, 'id': id})
+            return getOne(Category, id)
+        else:
+            return getMultiple(Category)
 
     elif request.method == 'POST':
-        decodedBody = json.loads(request.body)
-        document = Category(name=decodedBody['name'])
-        document.save()
-        jsonDocument = json.loads(document.to_json())
-        return JsonResponse({'data': jsonDocument, 'id': id})
+        return createOne(Category, request.body)
 
     elif request.method == 'PUT':
-        document = json.dumps(Category.objects(_id=id))
-        document = request.body
-        document.save()
-        return JsonResponse({'data': document, 'id': id})
+        return updateOne(Category, id, request.body)
 
     elif request.method == 'DELETE':
-        document = json.dumps(Category.objects(_id=id))
-        document.delete()
-        return JsonResponse({'message': 'deleted'})
+        return deleteOne(Category, id)
 
-    return HttpResponse('Somwthing went wrong.')
+    return HttpResponse('Request not supported.')
 
 
 @csrf_exempt
-def template(request: HttpRequest, id=False):
+def subCategoryController(request: HttpRequest, id=False):
     if request.method == 'GET':
-        # if id is not false.
-        if id:
-            return HttpResponse(id)
-        return HttpResponse('Get done')
+        # if id is not false then return single document
+        if id != False:
+            return getOne(SubCategory, id)
+        else:
+            return getMultiple(SubCategory)
 
     elif request.method == 'POST':
-        return HttpResponse('POST done')
+        return createOne(SubCategory, request.body)
 
     elif request.method == 'PUT':
-        return HttpResponse('PUT done')
+        return updateOne(SubCategory, id, request.body)
 
     elif request.method == 'DELETE':
-        return HttpResponse('DELETE done')
+        return deleteOne(SubCategory, id)
 
-    return HttpResponse('Somwthing went wrong.')
+    return HttpResponse('Request not supported.')
+
+
+@csrf_exempt
+def itemController(request: HttpRequest, id=False):
+    if request.method == 'GET':
+        # if id is not false then return single document
+        if id != False:
+            return getOne(Item, id)
+        else:
+            return getMultiple(Item)
+
+    elif request.method == 'POST':
+        return createOne(Item, request.body)
+
+    elif request.method == 'PUT':
+        return updateOne(Item, id, request.body)
+
+    elif request.method == 'DELETE':
+        return deleteOne(Item, id)
+
+    return HttpResponse('Request not supported.')
+
+
+def send_response(data, message):
+    return JsonResponse({'message': message, 'data': data})

@@ -1,32 +1,43 @@
-from django.http import HttpRequest, HttpResponse, JsonResponse
-import json
-
-from typing import TypeVar, Generic
-Model = TypeVar('Model')
+from django.http import JsonResponse
+from mongoengine import Document
 
 
-class Handler(Generic[Model]):
-    def getOne(self,  id):
-        document = json.dumps(Model.objects(_id=id))
-        return JsonResponse({'data': document, 'id': id})
+def getOne(Model,  id):
+    document = Model.objects.with_id(id)
+    converted = document.getDict()
+    return send_response(converted, 'Document fetched successfully.')
 
-    def getMultiple(self):
-        documents = json.dumps(Model.objects)
-        return JsonResponse({'data': documents, 'id': id})
 
-    def createOne(self,  body):
-        decodedBody = json.loads(body)
-        document = Model(decodedBody)
-        document.save()
-        return JsonResponse({'data': document, 'id': id})
+def getMultiple(Model):
+    converted = []
+    all_objects = Model.objects
+    for document in all_objects:
+        converted.append(document.getDict())
 
-    def updateOne(self,  id, body):
-        document = json.dumps(Model.objects(_id=id))
-        document = body
-        document.save()
-        return JsonResponse({'data': document, 'id': id})
+    return JsonResponse({'total': len(all_objects),
+                         'message': 'Documents fetched successfully.', 'data': converted})
 
-    def deleteOne(self,  id):
-        document = json.dumps(Model.objects(_id=id))
-        document.delete()
-        return JsonResponse({'message': 'deleted'})
+
+def createOne(Model,  body):
+    decodedBody = json.loads(body)
+    document = Model().create(decodedBody)
+    converted = document.getDict()
+    return send_response(converted, 'Document created successfully.')
+
+
+def updateOne(Model,  id, body):
+    decodedBody = json.loads(body)
+    document = Model.objects.with_id(id).update(decodedBody)
+    converted = document.getDict()
+    return send_response(converted, 'Document updated successfully.')
+
+
+def deleteOne(Model,  id):
+    document = Model.objects.with_id(id)
+    document.delete()
+    converted = document.getDict()
+    return send_response(converted, 'Document deleted successfully.')
+
+
+def send_response(data, message):
+    return JsonResponse({'message': message, 'data': data})
