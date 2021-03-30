@@ -27,10 +27,11 @@ SECRET_KEY = '5oi$jnfdu^vddo)zr2!hh44(5a)fie_h!l#)ib3rgmktmqnw7y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'django-e-com.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['127.0.0.1',
+                 'django-e-com.herokuapp.com', 'http://localhost:4200']
 
 # Application definition
-
+CORS_ORIGIN_ALLOW_ALL = True
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,10 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework_mongoengine'
+    'rest_framework_mongoengine',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

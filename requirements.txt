@@ -2,3 +2,4 @@ mongoengine
 Django
 gunicorn
 django-rest-framework-mongoengine
+django-cors-headers
