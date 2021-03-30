@@ -28,7 +28,7 @@ class Category(Document):
 class SubCategory(Document):
     name = fields.StringField(max_length=100)
     image = fields.StringField(max_length=100)
-    category = fields.StringField()
+    categoryId = fields.StringField()
     active = fields.BooleanField(default=True)
     description = fields.StringField(max_length=100)
 
