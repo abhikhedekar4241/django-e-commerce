@@ -19,7 +19,7 @@ def getMultiple(Model):
                          'message': 'Documents fetched successfully.', 'data': converted})
 
 
-def createOne(Model,  body):
+def createOne(Model, body):
     decodedBody = json.loads(body)
     document = Model().create(decodedBody)
     converted = document.getDict()

@@ -28,7 +28,7 @@ class Category(Document):
 class SubCategory(Document):
     name = fields.StringField(max_length=100)
     image = fields.StringField(max_length=100)
-    category = fields.ObjectId()
+    category = fields.StringField()
     active = fields.BooleanField(default=True)
     description = fields.StringField(max_length=100)
 
@@ -81,8 +81,8 @@ class Item(Document):
     featured = fields.BooleanField(default=True)
     # options = fields.ListField(EmbeddedDocumentField(ItemOption))
     description = fields.StringField(max_length=100)
-    categoryId = fields.ObjectId()
-    subCategoryId = fields.ObjectId()
+    categoryId = fields.StringField()
+    subCategoryId = fields.StringField()
 
     def create(self, params):
         super(Item, self).__init__()
