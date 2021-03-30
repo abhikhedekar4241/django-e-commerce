@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '5oi$jnfdu^vddo)zr2!hh44(5a)fie_h!l#)ib3rgmktmqnw7y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1', 'django-e-com.herokuapp.com', 'localhost']
 
@@ -75,15 +75,15 @@ WSGI_APPLICATION = 'e_commerce_backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': '',
-#         # 'NAME': 'e-commerce',
-#         # 'HOST': 'mongodb://e-commerce:e-commerce@cluster0-shard-00-00.gm1nd.mongodb.net:27017,cluster0-shard-00-01.gm1nd.mongodb.net:27017,cluster0-shard-00-02.gm1nd.mongodb.net:27017/e-com-django?ssl=true&replicaSet=atlas-1f0of8-shard-0&authSource=admin&retryWrites=true&w=majority',
-#         # 'USER': 'e-commerce',
-#         # 'PASSWORD': 'e-commerce',
-#     }
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'e-commerce',
+        # 'HOST': 'mongodb://e-commerce:e-commerce@cluster0-shard-00-00.gm1nd.mongodb.net:27017,cluster0-shard-00-01.gm1nd.mongodb.net:27017,cluster0-shard-00-02.gm1nd.mongodb.net:27017/e-com-django?ssl=true&replicaSet=atlas-1f0of8-shard-0&authSource=admin&retryWrites=true&w=majority',
+        # 'USER': 'e-commerce',
+        # 'PASSWORD': 'e-commerce',
+    }
+}
 
 MONGO_NAME = 'e-commerce'
 MONGO_DATABASE_HOST = 'mongodb://e-commerce:e-commerce@cluster0-shard-00-00.gm1nd.mongodb.net:27017,cluster0-shard-00-01.gm1nd.mongodb.net:27017,cluster0-shard-00-02.gm1nd.mongodb.net:27017/e-com-django?ssl=true&replicaSet=atlas-1f0of8-shard-0&authSource=admin&retryWrites=true&w=majority'
