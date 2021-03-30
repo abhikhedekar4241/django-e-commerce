@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '5oi$jnfdu^vddo)zr2!hh44(5a)fie_h!l#)ib3rgmktmqnw7y'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'django-e-com.herokuapp.com', 'localhost']
 
 # Application definition
 
@@ -84,9 +84,6 @@ WSGI_APPLICATION = 'e_commerce_backend.wsgi.application'
 #     }
 # }
 
-MONGO_USER = 'e-commerce'
-MONGO_PASS = 'e-commerce'
-MONGO_HOST = ''
 MONGO_NAME = 'e-commerce'
 MONGO_DATABASE_HOST = 'mongodb://e-commerce:e-commerce@cluster0-shard-00-00.gm1nd.mongodb.net:27017,cluster0-shard-00-01.gm1nd.mongodb.net:27017,cluster0-shard-00-02.gm1nd.mongodb.net:27017/e-com-django?ssl=true&replicaSet=atlas-1f0of8-shard-0&authSource=admin&retryWrites=true&w=majority'
 mongoengine.connect(MONGO_NAME, host=MONGO_DATABASE_HOST)
