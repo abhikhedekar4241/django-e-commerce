@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpRequest, QueryDict
 from mongoengine import Document
 import json
 
@@ -9,9 +9,18 @@ def getOne(Model,  id):
     return send_response(converted, 'Document fetched successfully.')
 
 
-def getMultiple(Model):
+def getMultiple(Model, request: HttpRequest):
     converted = []
-    all_objects = Model.objects
+    searchFilter = {}
+    s_id = request.GET.get('subCategoryId')
+    if s_id != None:
+        searchFilter['subCategoryId'] = s_id
+
+    c_id = request.GET.get('categoryId')
+    if c_id != None:
+        searchFilter['categoryId'] = c_id
+
+    all_objects = Model.objects(__raw__=searchFilter)
     for document in all_objects:
         converted.append(document.getDict())
 

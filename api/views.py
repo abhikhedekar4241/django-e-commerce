@@ -13,7 +13,7 @@ def categoryController(request: HttpRequest, id=False):
         if id != False:
             return getOne(Category, id)
         else:
-            return getMultiple(Category)
+            return getMultiple(Category, request)
 
     elif request.method == 'POST':
         return createOne(Category, request.body)
@@ -34,7 +34,7 @@ def subCategoryController(request: HttpRequest, id=False):
         if id != False:
             return getOne(SubCategory, id)
         else:
-            return getMultiple(SubCategory)
+            return getMultiple(SubCategory, request)
 
     elif request.method == 'POST':
         return createOne(SubCategory, request.body)
@@ -55,7 +55,7 @@ def itemController(request: HttpRequest, id=False):
         if id != False:
             return getOne(Item, id)
         else:
-            return getMultiple(Item)
+            return getMultiple(Item, request)
 
     elif request.method == 'POST':
         return createOne(Item, request.body)
